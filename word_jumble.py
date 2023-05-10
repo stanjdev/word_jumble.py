@@ -1,3 +1,9 @@
+"""
+JUST RUN
+`python3 word_jumble.py`
+IN THE TERMINAL
+"""
+
 from words_list import dictionary_words
 from histogram_generator import histogram_generator
 
