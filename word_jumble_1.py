@@ -1,6 +1,6 @@
 # """
 # JUST RUN
-# `python3 word_jumble.py`
+# `python3 word_jumble_1.py`
 # IN THE TERMINAL
 # """
 

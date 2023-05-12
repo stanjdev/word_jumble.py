@@ -67,7 +67,7 @@ def solve_one_jumble(letters):
       if main_str_hist == curr_histogram:
           valid_words.append(word)
     if len(valid_words) == 0:
-      print('Not found in english dictionary!')
+      print(f"{letters} Not found in english dictionary!")
       return None
     return valid_words
 
@@ -111,9 +111,46 @@ def solve_final_jumble(letters, final_circles):
     valid_phrases = []
 
     # TODO: Unscramble the given letters into all valid phrases
-    # ========> YOUR CODE HERE <========
 
-    return valid_phrases
+    # loop through the group sizes, find a 2 letter word in the dictionary, then with those
+    # remaining letters, find a 6 letter word. stuff them into tuples
+
+    seen = {}
+    remaining_letters = ''
+    for size in group_sizes:
+      for i, letter_i in enumerate(letters):
+        for j, letter_j in enumerate(letters):
+          if i == j:
+            continue
+          elif i < j:
+            remaining_letters = letters[:i] + letters[i+1:j] + letters[j+1:]
+          elif i > j:
+            remaining_letters = letters[:j] + letters[j+1:i] + letters[i+1:]
+          if letter_i == letter_j:
+            # skip if same letter
+            continue
+
+          curr_word = ''
+          for k in range(size):
+            curr_word += letters[k]
+
+          # two_letter_word = letter_i + letter_j
+          if curr_word in seen:
+            # skip if exists in cache
+            continue
+          else:
+            # check if curr_word is in english dictionary
+            found_curr_word = solve_one_jumble(curr_word)
+            if found_curr_word is not None:
+              found_next_word = solve_one_jumble(remaining_letters)
+              if found_next_word is not None:
+                seen[curr_word] = found_next_word
+            else:
+              seen[curr_word] = 'no matches found'
+
+    # print(seen)
+    # return seen
+    # return valid_phrases
 
 
 def solve_word_jumble(letters, circles, final):
